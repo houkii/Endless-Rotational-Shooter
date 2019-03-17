@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BottomPanelController : MonoBehaviour
+public class BottomPanelController : MoveableUIElement
 {
     [SerializeField]
     private Text ScoreText;
@@ -29,5 +29,4 @@ public class BottomPanelController : MonoBehaviour
     {
         HealthSlider.value = value;
     }
-
 }

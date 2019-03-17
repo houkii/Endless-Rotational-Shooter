@@ -674,11 +674,11 @@ RectTransform:
   - {fileID: 7195051569909326208}
   - {fileID: 7195051570994932516}
   m_Father: {fileID: 7195051569401499974}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 420}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1164823739
@@ -701,6 +701,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34afc5acbc0d1f64fab6f384d5b841a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnabledPosition: {x: 0, y: 0}
+  DisabledPosition: {x: -1280, y: 0}
+  MovementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0014534884
+      value: -0.0023584906
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49808872
+      value: 1.2591628
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.69777167
+      value: 0.8015097
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.84589005
+      value: 1.0963845
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0013967
+      value: 0.9981313
+      inSlope: 1.4279245
+      outSlope: 1.4279245
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.44247916
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MovementTime: 0.5
   SummaryText: {fileID: 7195051570994932519}
   StartGameText: {fileID: 7195051569909326211}
 --- !u!1 &1282932109
@@ -1008,7 +1062,7 @@ RectTransform:
   - {fileID: 7195051571060475906}
   - {fileID: 7195051569878246788}
   m_Father: {fileID: 7195051569401499974}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1035,6 +1089,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5ac087b0cff5c4084b95e40401b5ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnabledPosition: {x: 0, y: 0}
+  DisabledPosition: {x: 0, y: -300}
+  MovementCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MovementTime: 0.5
   ScoreText: {fileID: 7195051571060475909}
   HealthSlider: {fileID: 7195051569878246791}
 --- !u!1 &1814828309 stripped
@@ -1453,8 +1516,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1685237190}
   - {fileID: 1164823738}
+  - {fileID: 1685237190}
   m_Father: {fileID: 7195051569847565174}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1587,8 +1650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitMask: {fileID: 0}
-  TopPanel: {fileID: 1164823738}
-  BottomPanel: {fileID: 1685237190}
+  TopPanel: {fileID: 1164823740}
+  BottomPanel: {fileID: 1685237192}
 --- !u!114 &7195051569847565172
 MonoBehaviour:
   m_ObjectHideFlags: 0

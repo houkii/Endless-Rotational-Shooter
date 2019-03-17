@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TopPanelController : MonoBehaviour
+public class TopPanelController : MoveableUIElement
 {
     [SerializeField]
     private Text SummaryText;
@@ -11,7 +11,7 @@ public class TopPanelController : MonoBehaviour
     [SerializeField]
     private Text StartGameText;
 
-    private void OnEnable()
+    public override void SetEnabled(bool enabled)
     {
         StartGameText.gameObject.SetActive(true);
 
@@ -19,6 +19,8 @@ public class TopPanelController : MonoBehaviour
             ShowSummary();
         else
             SummaryText.gameObject.SetActive(false);
+
+        base.SetEnabled(enabled);
     }
 
     private void ShowSummary()

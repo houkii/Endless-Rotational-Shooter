@@ -9,22 +9,22 @@ public class CanvasController : MonoBehaviour
     private Image HitMask;
 
     [SerializeField]
-    private RectTransform TopPanel;
+    private TopPanelController TopPanel;
 
     [SerializeField]
-    private RectTransform BottomPanel;
+    private BottomPanelController BottomPanel;
 
     public void SetGUIState(bool isGameRunning)
     {
         if(isGameRunning)
         {
-            TopPanel.gameObject.SetActive(false);
-            BottomPanel.gameObject.SetActive(true);
+            TopPanel.SetEnabled(false);
+            BottomPanel.SetEnabled(true);
         }
         else
         {
-            TopPanel.gameObject.SetActive(true);
-            BottomPanel.gameObject.SetActive(false);
+            TopPanel.SetEnabled(true);
+            BottomPanel.SetEnabled(false);
         }
     }
 }
