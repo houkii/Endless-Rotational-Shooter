@@ -1,43 +1,126 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class RayBullet : MonoBehaviour
 {
-    public float range = 20f;
-    public int damage = 1;
-    public float lifeTime = 0.15f;
-
-    private Ray ray;
-    private RaycastHit hit;
     [SerializeField]
-    private LineRenderer line;
+    private float Range = 20f;
+    [SerializeField]
+    private int Damage = 1;
+    [SerializeField]
+    private float RayHeadMovementTime = 0.3f;
+    [SerializeField]
+    private float RayTailMovementTime = 0.4f;
+
+    // if this is set to zero, ray tail will start to move when head achieves target
+    [SerializeField]
+    public float RayTailDelayTime = 0.1f;
+
+    private float LifeTime;
+    private Ray Ray;
+    private RaycastHit Hit;
+
+    [SerializeField]
+    private LineRenderer Line;
     [SerializeField]
     private int shootableMask;
-    
+
+    private Action RayAchievedTargetAction = null;
+
     void Awake()
     {
         // gun muzzle makes sure orientation is correct...
-        ray.origin = transform.position;
-        ray.direction = transform.forward;
-        line.SetPosition(0, transform.position);
+        Ray.origin = transform.position;
+        Ray.direction = transform.forward;
+        Line.SetPosition(0, transform.position);
 
-        if(Physics.Raycast(ray, out hit, range))
+        Vector3 targetRayPosition;
+        this.GetRayTarget(out targetRayPosition);
+        StartCoroutine(ShootRay(targetRayPosition, RayHeadMovementTime, RayTailMovementTime, RayTailDelayTime, RayAchievedTargetAction));
+
+        LifeTime = RayHeadMovementTime + RayTailMovementTime;
+        Destroy(this.gameObject, LifeTime);
+    }
+
+    private void GetRayTarget(out Vector3 target)
+    {
+        if (Physics.Raycast(Ray, out Hit, Range))
         {
-            if(hit.collider.gameObject.tag == "Enemy")
+            if (Hit.collider.gameObject.tag == "Enemy")
             {
-                Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
-                enemy.OnEnemyHit?.Invoke(this.damage);
+                Enemy enemy = Hit.collider.gameObject.GetComponent<Enemy>();
+
+                // enemy will be hit when head of the ray finishes its 'journey'
+                RayAchievedTargetAction += () => {
+                    // this check is needed because delegate could be called after object destruction 
+                    if (enemy != null)
+                    {
+                        enemy.OnEnemyHit?.Invoke(this.Damage);
+                    }
+                };
             }
 
             // set line end at enemy pos
-            line.SetPosition(1, hit.point);
+            target = Hit.point;
         }
         else
         {
             // set line end at max range
-            line.SetPosition(1, ray.origin + ray.direction * range);
+            target = Ray.origin + Ray.direction * Range;
         }
-        Destroy(this.gameObject, lifeTime);
+    }
+
+    private IEnumerator ShootRay(Vector3 targetPosition, float headTime, float tailTime, float tailDelay = 0, Action onRayAchievedTarget = null)
+    {
+        Vector3 startPosition = Ray.origin;
+
+        // if no tailDelay, delay rayTail movement until head achieves target
+        if(tailDelay == 0)
+        {
+            // head of the ray travel
+            yield return StartCoroutine(MoveLinePosition(Line, 1, startPosition, targetPosition, headTime));
+            // target achieved by head action
+            onRayAchievedTarget?.Invoke();
+            // tail of the ray travel
+            yield return StartCoroutine(MoveLinePosition(Line, 0, startPosition, targetPosition, tailTime));
+        }
+        else // otherwise wait desired time and trigger tail movement coroutine
+        {
+            StartCoroutine(MoveLinePosition(Line, 1, startPosition, targetPosition, headTime));
+
+            // time tailDelay / headTime 'time conflict' solving - rest of the logic is the same as above
+            if (tailDelay > headTime)
+            {
+                yield return new WaitForSeconds(headTime);
+                onRayAchievedTarget?.Invoke();
+                yield return new WaitForSeconds(tailDelay - headTime);
+                StartCoroutine(MoveLinePosition(Line, 0, startPosition, targetPosition, tailTime));
+            }
+            else
+            {
+                yield return new WaitForSeconds(tailDelay);
+                StartCoroutine(MoveLinePosition(Line, 0, startPosition, targetPosition, tailTime));
+                yield return new WaitForSeconds(headTime - tailDelay);
+                onRayAchievedTarget?.Invoke();
+            }
+        }
+    }
+
+    // basic lerp of linerenderer vertex position
+    private IEnumerator MoveLinePosition(LineRenderer lineRenderer, int vertexIndex, Vector3 startPosition, Vector3 targetPosition, float duration)
+    {
+        float currentTime = 0f;
+        Vector3 currentPosition;
+
+        while (currentTime <= duration)
+        {
+            var step = Mathf.Clamp01(currentTime / duration);
+            currentPosition = Vector3.Lerp(startPosition, targetPosition, step);
+            lineRenderer.SetPosition(vertexIndex, currentPosition);
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        yield break;
     }
 }
