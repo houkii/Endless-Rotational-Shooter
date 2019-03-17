@@ -111,6 +111,8 @@ MonoBehaviour:
     Health: 2
     rewardPoints: 5
     damage: 2
+  HitParticleSys: {fileID: 2253954135196589246, guid: bc8a67dc7fb006641a4a039bab729b60,
+    type: 3}
   SpawnTweenTime: 1
   Target: {fileID: 0}
   MovementTime: 6

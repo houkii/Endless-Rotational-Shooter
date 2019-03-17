@@ -9,6 +9,9 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     private EnemyStats Stats;
 
+    [SerializeField]
+    public GameObject HitParticleSys;
+
     // prevent modifying params from outside, but let'em get values
     public int Health { get { return Stats.Health; } }
     public int Damage { get { return Stats.Damage; } }
@@ -100,6 +103,9 @@ public abstract class Enemy : MonoBehaviour
     private void Hit(int damage)
     {
         this.Stats.Health -= damage;
+        var hitPS = Instantiate(HitParticleSys, transform.position, Quaternion.identity);
+        Destroy(hitPS, .5f);
+
         if (this.Health <= 0)
             this.Kill();
     }

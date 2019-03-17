@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
         set { Stats.OnHealthChanged = value; }
     }
 
+    public int Score { get { return Stats.Score; } }
+
     private PlayerStats DefaultStats; // for reset
 
     public delegate void EnemyHitDelegate(Enemy enemy);

@@ -12,11 +12,12 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private PlayerController player;
     [SerializeField]
-    private TopPanelController UI;
+    private CanvasController UI;
 
     //public UnityEvent GameStartEvent;
     //public UnityEvent GameStopEvent;
 
+    [HideInInspector]
     public bool GameRunning = false;
 
     void Awake()
@@ -30,6 +31,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         player.OnPlayerDead += StopGame;
+        UI.SetGUIState(GameRunning);
     }
 
     public void RestartGame()
