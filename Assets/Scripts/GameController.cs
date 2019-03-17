@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameController : MonoBehaviour
+public class GameController : Singleton<GameController>
 {
-    public static GameController Instance;
-
     [SerializeField]
     private SpawnerController spawner;
     [SerializeField]
@@ -19,14 +17,6 @@ public class GameController : MonoBehaviour
 
     [HideInInspector]
     public bool GameRunning = false;
-
-    void Awake()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-    }
 
     private void Start()
     {

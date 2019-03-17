@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WeaponHolder : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class WeaponHolder : MonoBehaviour
     private Vector3 recoilPosition;
     private Quaternion recoilRotation;
 
+
     void Awake()
     {
         this.defaultLocalPosition = transform.localPosition;
@@ -28,6 +30,7 @@ public class WeaponHolder : MonoBehaviour
         this.recoilPosition = defaultLocalPosition - new Vector3(0, 0, RecoilPositionOffset);
         this.recoilRotation = defaultLocalRotation * Quaternion.Euler(RecoilRotationOffset, 0, 0);
     }
+
 
     public void Shoot()
     {

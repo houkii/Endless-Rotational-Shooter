@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     // hide stats from outside world, only changes visible
     [SerializeField]
@@ -32,15 +32,9 @@ public class PlayerController : MonoBehaviour
     public delegate void PlayerKilledDelegate();
     public PlayerKilledDelegate OnPlayerDead;
 
-    public static PlayerController Instance;
-
-    void Awake()
+    public override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-
+        base.Awake();
         DefaultStats = (PlayerStats)Stats.Clone();
         Enemy.OnEnemyKilled += AddScore;
         this.OnEnemyHit += HandleEnemyCollision;
