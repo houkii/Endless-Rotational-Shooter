@@ -18,7 +18,7 @@ public abstract class Enemy : MonoBehaviour
     public int RewardPoints { get { return Health > 0 ? 0 : Stats.RewardPoints; } } // little hacky - prevent adding points for enemies killed in "different way"
 
     public float SpawnTweenTime = 1.0f;
-    public Transform Target;
+    protected Vector3 Target;
 
     // let's celebrate every enemy kill through UI!
     public delegate void EnemyKilledDelegate(Enemy enemy);
@@ -28,20 +28,11 @@ public abstract class Enemy : MonoBehaviour
     public delegate void EnemyHitDelegate(int damage);
     public EnemyHitDelegate OnEnemyHit;
 
-
     protected virtual void Awake()
     {
-        this.Target = GameObject.Find("Player").transform;
+        this.Target = Vector3.Scale(PlayerController.Instance.transform.position, new Vector3(1,0,1));
         this.OnEnemyHit += Hit;
         this.RunBehaviour();
-    }
-
-    protected virtual void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Bullet")
-        {
-            --Stats.Health;
-        }
     }
 
     private void RunBehaviour()
@@ -52,8 +43,8 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator RunBehaviourCoroutine()
     {
         yield return StartCoroutine(SpawnTween(this.SpawnTweenTime));
-        yield return StartCoroutine(RotateTowards(Target.position));
-        yield return StartCoroutine(MoveTo(Target.position));
+        yield return StartCoroutine(RotateTowards(this.Target));
+        yield return StartCoroutine(MoveTo(this.Target));
         yield break;
     }
 

@@ -41,6 +41,8 @@ public class RayBullet : MonoBehaviour
 
         LifeTime = RayHeadMovementTime + RayTailMovementTime;
         Destroy(this.gameObject, LifeTime);
+
+        this.PlaySound();
     }
 
     private void GetRayTarget(out Vector3 target)
@@ -122,5 +124,13 @@ public class RayBullet : MonoBehaviour
             yield return null;
         }
         yield break;
+    }
+
+    private void PlaySound()
+    {
+        // play laser sound with slightly randomized pitch
+        var AS = GetComponent<AudioSource>();
+        AS.pitch = UnityEngine.Random.Range(0.9f, 1.1f);
+        AS.Play();
     }
 }

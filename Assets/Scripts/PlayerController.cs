@@ -32,6 +32,8 @@ public class PlayerController : Singleton<PlayerController>
     public delegate void PlayerKilledDelegate();
     public PlayerKilledDelegate OnPlayerDead;
 
+    public AudioSource Audio;
+
     public override void Awake()
     {
         base.Awake();
@@ -61,6 +63,7 @@ public class PlayerController : Singleton<PlayerController>
 
         if(Stats.Health <= 0)
         {
+            Audio.Play();
             this.OnPlayerDead.Invoke();
         }
     }

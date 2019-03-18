@@ -31,7 +31,6 @@ public class WeaponHolder : MonoBehaviour
         this.recoilRotation = defaultLocalRotation * Quaternion.Euler(RecoilRotationOffset, 0, 0);
     }
 
-
     public void Shoot()
     {
         var ball = Instantiate(projectilePrefab, muzzle.position, muzzle.transform.rotation);
@@ -45,8 +44,6 @@ public class WeaponHolder : MonoBehaviour
     }
 
     // attackTime - rising, releasTime - falling (as in signal envelopes)
-    // Could raise reticlePointer (ergo crosshair) aswell, but this way seems fun for me
-    // Update: ...Actually couldn't do it, because accel/gyro controls pointer, silly me :) 
     private IEnumerator Recoil(float attackTime, float releaseTime)
     {
         float currentTime = 0f;
@@ -66,7 +63,7 @@ public class WeaponHolder : MonoBehaviour
         currentTime = 0f;
 
         // same as above
-        while (transform.localPosition != startPosition)
+        while (transform.localPosition != defaultLocalPosition)
         {
             float step = Mathf.Clamp01(currentTime / releaseTime);
             transform.localPosition = Vector3.Lerp(this.recoilPosition, this.defaultLocalPosition, step);

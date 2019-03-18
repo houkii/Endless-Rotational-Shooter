@@ -21,7 +21,7 @@ public class FlyingEnemy : SlidingEnemy
         StartCoroutine(base.MoveTo(targetPosition));
 
         float currentCurveTime = 0f;
-        while(transform.position != Target.position)
+        while(transform.position != Target)
         {
             // modulate movement function with animation curve
             transform.position += transform.right * HorizontalFlightCurve.Evaluate(currentCurveTime);
