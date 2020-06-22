@@ -1,22 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
 public class MoveableUIElement : MonoBehaviour
 {
-    [SerializeField]
-    private Vector2 EnabledPosition;
-
-    [SerializeField]
-    private Vector2 DisabledPosition;
-
-    [SerializeField]
-    private AnimationCurve MovementCurve;   // as an easing function
-
-    [SerializeField]
-    private float MovementTime = 0.5f;
+    [SerializeField] private Vector2 EnabledPosition;
+    [SerializeField] private Vector2 DisabledPosition;
+    [SerializeField] private AnimationCurve MovementCurve;   // as an easing function
+    [SerializeField] private float MovementTime = 0.5f;
 
     private RectTransform RT;
     private Coroutine MovementCoroutine = null;
@@ -75,7 +67,6 @@ public class MoveableUIElement : MonoBehaviour
         }
 
         onComplete?.Invoke();
-
         yield break;
     }
 

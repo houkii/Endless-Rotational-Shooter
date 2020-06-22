@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class TopPanelController : MoveableUIElement
 {
-    [SerializeField]
-    private Text SummaryText;
-
-    [SerializeField]
-    private Text StartGameText;
+    [SerializeField] private Text SummaryText;
+    [SerializeField] private Text StartGameText;
 
     public override void SetEnabled(bool enabled)
     {

@@ -25,9 +25,7 @@ public class FlyingEnemy : SlidingEnemy
         {
             // modulate movement function with animation curve
             transform.position += transform.right * HorizontalFlightCurve.Evaluate(currentCurveTime);
-
             currentCurveTime += Time.deltaTime / MovementTime;
-
             yield return null;
         }
     }

@@ -1,29 +1,20 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class WeaponHolder : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform muzzle;
 
-    // public Weapon ActiveWeapon;      // todo
-
+    [SerializeField] private float RecoilPositionOffset = 0.16f;
+    [SerializeField] private float RecoilRotationOffset = -5f;
     private Coroutine RecoilCoroutine = null;
-
-    [SerializeField]
-    private float RecoilPositionOffset = 0.16f;
-    [SerializeField]
-    private float RecoilRotationOffset = -5f;
-
     private Vector3 defaultLocalPosition;
     private Quaternion defaultLocalRotation;
     private Vector3 recoilPosition;
     private Quaternion recoilRotation;
 
-
-    void Awake()
+    private void Awake()
     {
         this.defaultLocalPosition = transform.localPosition;
         this.defaultLocalRotation = transform.localRotation;
@@ -50,6 +41,7 @@ public class WeaponHolder : MonoBehaviour
         Vector3 startPosition = transform.localPosition;
         Quaternion startRotation = transform.localRotation;
 
+        // move to recoil position
         // time will be "slightly" exceeded (1 frame) to get positions right 
         while (transform.localPosition != recoilPosition)
         {
@@ -62,7 +54,7 @@ public class WeaponHolder : MonoBehaviour
 
         currentTime = 0f;
 
-        // same as above
+        // move to default position
         while (transform.localPosition != defaultLocalPosition)
         {
             float step = Mathf.Clamp01(currentTime / releaseTime);

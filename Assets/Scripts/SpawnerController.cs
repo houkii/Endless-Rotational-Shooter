@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class SpawnerController : MonoBehaviour
 {
-    [SerializeField]
-    private List<GameObject> enemyPrefabs = new List<GameObject>();
-    [SerializeField]
-    private float spawnDelay = 2.0f;
-    [SerializeField]
-    private float centerRadius = 26.0f;
-    [SerializeField]
-    private float annulusWidth = 6.0f;
-
+    [SerializeField] private List<GameObject> enemyPrefabs = new List<GameObject>();
+    [SerializeField] private float spawnDelay = 2.0f;
+    [SerializeField] private float centerRadius = 26.0f;
+    [SerializeField] private float annulusWidth = 6.0f;
     private List<Enemy> aliveEnemies = new List<Enemy>();
 
     private void Awake()
@@ -28,20 +23,20 @@ public class SpawnerController : MonoBehaviour
     public void StopSpawner()
     {
         StopAllCoroutines();
-        this.ClearEnemies();
+        ClearEnemies();
     }
 
     public void Restart()
     {
-        this.StopSpawner();
-        this.StartSpawner();
+        StopSpawner();
+        StartSpawner();
     }
 
     private IEnumerator Spawn(float spawnDelay)
     {
         while(true)
         {
-            this.SpawnRandomEnemy();
+            SpawnRandomEnemy();
             yield return new WaitForSeconds(spawnDelay);
         }
     }

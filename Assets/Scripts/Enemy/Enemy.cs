@@ -1,38 +1,25 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    private EnemyStats Stats;
-
-    [SerializeField]
-    public GameObject HitParticleSys;
-
-    // prevent modifying params from outside, but let'em get values
+    public static Action<Enemy> OnEnemyKilled;
+    public Action<int> OnEnemyHit;
     public int Health { get { return Stats.Health; } }
     public int Damage { get { return Stats.Damage; } }
-    public int RewardPoints { get { return Health > 0 ? 0 : Stats.RewardPoints; } } // little hacky - prevent adding points for enemies killed in "different way"
-
+    public int RewardPoints { get { return Health > 0 ? 0 : Stats.RewardPoints; } } // prevent adding points for enemies killed in "different way"
     public float SpawnTweenTime = 1.0f;
+
+    [SerializeField] private EnemyStats Stats;
+    [SerializeField] private GameObject HitParticleSys;
     protected Vector3 Target;
-
-    // let's celebrate every enemy kill through UI!
-    public delegate void EnemyKilledDelegate(Enemy enemy);
-    public static EnemyKilledDelegate OnEnemyKilled;
-
-    // hit event for each enemy 
-    public delegate void EnemyHitDelegate(int damage);
-    public EnemyHitDelegate OnEnemyHit;
 
     protected virtual void Awake()
     {
-        this.Target = Vector3.Scale(PlayerController.Instance.transform.position, new Vector3(1,0,1));
-        this.OnEnemyHit += Hit;
-        this.RunBehaviour();
+        Target = Vector3.Scale(PlayerController.Instance.transform.position, new Vector3(1,0,1));
+        OnEnemyHit += Hit;
+        RunBehaviour();
     }
 
     private void RunBehaviour()
@@ -102,23 +89,3 @@ public abstract class Enemy : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public struct EnemyStats
-{
-    // only hp is modifiable
-    public int Health;
-
-    [SerializeField]
-    private int rewardPoints;
-    public int RewardPoints
-    {
-        get { return rewardPoints; }
-    }
-
-    [SerializeField]
-    private int damage;
-    public int Damage
-    {
-        get { return damage; }
-    }
-}

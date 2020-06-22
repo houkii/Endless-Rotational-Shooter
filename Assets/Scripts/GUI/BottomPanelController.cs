@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class BottomPanelController : MoveableUIElement
 {
-    [SerializeField]
-    private Text ScoreText;
-
-    [SerializeField]
-    private Slider HealthSlider;
-
+    [SerializeField] private Text ScoreText;
+    [SerializeField] private Slider HealthSlider;
     private int currentScore = 0;
 
     void Start()

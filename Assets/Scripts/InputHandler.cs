@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 public class InputHandler : MonoBehaviour
@@ -9,14 +7,14 @@ public class InputHandler : MonoBehaviour
     public float LockInputTime = 2.0f;
     public UnityEvent OnScreenClick;
 
-    bool InputLocked = false;
+    private bool InputLocked = false;
 
-    void Start()
+    private void Start()
     {
         PlayerController.Instance.OnPlayerDead += () => StartCoroutine(LockInput(LockInputTime));
     }
 
-    void Update()
+    private void Update()
     {
         if (InputLocked) return;
 

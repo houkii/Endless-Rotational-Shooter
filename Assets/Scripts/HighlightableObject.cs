@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Renderer))]
@@ -9,17 +6,17 @@ using UnityEngine.EventSystems;
 public class HighlightableObject : MonoBehaviour
 {
     public Material HighlightedMaterial;
-    private Material DefaultMaterial;
 
+    private Material DefaultMaterial;
     private EventTrigger eventTrigger;
     private Renderer renderer;
 
-    void Awake()
+    private void Awake()
     {
-        this.eventTrigger = GetComponent<EventTrigger>();
-        this.renderer = GetComponent<Renderer>();
-        this.DefaultMaterial = renderer.sharedMaterial;
-        this.RegisterEvents();
+        eventTrigger = GetComponent<EventTrigger>();
+        renderer = GetComponent<Renderer>();
+        DefaultMaterial = renderer.sharedMaterial;
+        RegisterEvents();
     }
 
     private void RegisterEvents()

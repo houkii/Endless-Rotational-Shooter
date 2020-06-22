@@ -4,31 +4,21 @@ using UnityEngine;
 
 public class RayBullet : MonoBehaviour
 {
-    [SerializeField]
-    private float Range = 20f;
-    [SerializeField]
-    private int Damage = 1;
-    [SerializeField]
-    private float RayHeadMovementTime = 0.3f;
-    [SerializeField]
-    private float RayTailMovementTime = 0.4f;
+    [SerializeField] private LineRenderer Line;
+    [SerializeField] private int shootableMask;
+    [SerializeField] private float Range = 20f;
+    [SerializeField] private int Damage = 1;
+    [SerializeField] private float RayHeadMovementTime = 0.3f;
+    [SerializeField] private float RayTailMovementTime = 0.4f;
 
     // if this is set to zero, ray tail will start to move when head achieves target
-    [SerializeField]
-    public float RayTailDelayTime = 0.1f;
-
+    [SerializeField] private float RayTailDelayTime = 0.1f;
     private float LifeTime;
     private Ray Ray;
     private RaycastHit Hit;
-
-    [SerializeField]
-    private LineRenderer Line;
-    [SerializeField]
-    private int shootableMask;
-
     private Action RayAchievedTargetAction = null;
 
-    void Awake()
+    private void Awake()
     {
         // gun muzzle makes sure orientation is correct...
         Ray.origin = transform.position;

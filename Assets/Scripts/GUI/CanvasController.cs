@@ -1,18 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
-    [SerializeField]
-    private Image HitMask;
-
-    [SerializeField]
-    private TopPanelController TopPanel;
-
-    [SerializeField]
-    private BottomPanelController BottomPanel;
+    [SerializeField] private Image HitMask;
+    [SerializeField] private TopPanelController TopPanel;
+    [SerializeField] private BottomPanelController BottomPanel;
 
     public void SetGUIState(bool isGameRunning)
     {

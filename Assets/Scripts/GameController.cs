@@ -5,18 +5,13 @@ using UnityEngine.Events;
 
 public class GameController : Singleton<GameController>
 {
-    [SerializeField]
-    private SpawnerController spawner;
-    [SerializeField]
-    private PlayerController player;
-    [SerializeField]
-    private CanvasController UI;
+    public UnityEvent GameStartEvent;
+    public UnityEvent GameStopEvent;
+    [HideInInspector] public bool GameRunning = false;
 
-    //public UnityEvent GameStartEvent;
-    //public UnityEvent GameStopEvent;
-
-    [HideInInspector]
-    public bool GameRunning = false;
+    [SerializeField] private SpawnerController spawner;
+    [SerializeField] private PlayerController player;
+    [SerializeField] private CanvasController UI;
 
     private void Start()
     {
@@ -30,7 +25,7 @@ public class GameController : Singleton<GameController>
         player.Restart();
         spawner.Restart();
         UI.SetGUIState(GameRunning);
-        //GameStartEvent?.Invoke();
+        GameStartEvent?.Invoke();
     }
 
     public void StopGame()
@@ -38,6 +33,6 @@ public class GameController : Singleton<GameController>
         GameRunning = false;
         spawner.StopSpawner();
         UI.SetGUIState(GameRunning);
-        //GameStopEvent?.Invoke();
+        GameStopEvent?.Invoke();
     }
 }
